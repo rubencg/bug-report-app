@@ -1,3 +1,4 @@
 .idea
 /vendor/
 /Src/Logger/*.log
+.DS_Store
