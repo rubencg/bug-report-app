@@ -2,3 +2,4 @@
 /vendor/
 /Src/Logger/*.log
 .DS_Store
+.phpunit.result.cache

@@ -31,7 +31,7 @@ class App
     public function getEnvironment(): string
     {
         $env = $this->config['env'];
-        return isset($env) ? $env : 'production';
+        return $this->isTestMode() ? 'test' : (isset($env) ? $env : 'production');
     }
 
     /**
@@ -57,8 +57,21 @@ class App
         return php_sapi_name() == 'cli' || php_sapi_name() == 'phpbg';
     }
 
+    /**
+     * @return DateTimeInterface
+     * @throws Exception
+     */
     public function getServerTime(): DateTimeInterface
     {
         return new DateTime('now', new DateTimeZone('America/Mexico_City'));
+    }
+
+    public function isTestMode(): bool
+    {
+        if(!$this->isRunningFromConsole()){
+            return false;
+        }
+
+        return defined('PHPUNIT_RUNNING') && PHPUNIT_RUNNING == true;
     }
 }
