@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace App\Helpers;
 
 
+use App\Exception\NotFoundException;
+use Throwable;
+
 class Config
 {
     public static function get(string $filename, string $key = null)
@@ -25,9 +28,9 @@ class Config
             if (file_exists($path)) {
                 $fileContent = require $path;
             }
-        } catch (\Throwable $exception) {
-            throw new \RuntimeException(
-                sprintf('The specified file: %s was not found', $filename)
+        } catch (Throwable $exception) {
+            throw new NotFoundException(
+                sprintf('The specified file: %s was not found', $filename),
             );
         }
 
