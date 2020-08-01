@@ -9,7 +9,7 @@ use App\Exception\InvalidLogLevelArgument;
 use App\Exception\NotFoundException;
 
 // Todo: change to asbtract
-class QueryBuilder
+abstract class QueryBuilder
 {
     protected $connection;
     protected $table;
@@ -18,9 +18,6 @@ class QueryBuilder
     protected $placeholders;
     protected $bindings;
     protected $operation = self::DML_TYPE_SELECT;
-
-    // Todo: delete
-    public $query = "";
 
     const OPERATORS = ['=', '>=', '>', '<=', '<', '<>'];
     const PLACEHOLDER = '?';
@@ -53,8 +50,8 @@ class QueryBuilder
             }
         }
         $this->parseWhere([$column => $value], $operator);
-//        $query = $this->prepare($this->getQuery($this->operation)); ToDO: Change this
-        $this->query = $this->getQuery($this->operation);
+        $query = $this->prepare($this->getQuery($this->operation));
+        $this->statement = $this->execute($query);
         return $this;
     }
 
@@ -75,8 +72,47 @@ class QueryBuilder
         return $this;
     }
 
-//    protected abstract function prepare($getQuery);
 
+    public function create(array $data)
+    {
 
+    }
+
+    public function update(array $data)
+    {
+
+    }
+
+    public function delete()
+    {
+
+    }
+
+    public function raw($query)
+    {
+
+    }
+
+    public function find($id)
+    {
+        
+    }
+
+    public function findOneBy(string $field, $value)
+    {
+        
+    }
+
+    public function first()
+    {
+        
+    }
+
+    public abstract function get();
+    public abstract function count();
+    public abstract function lastInsertedId();
+    public abstract function prepare($query);
+    public abstract function execute($statement);
+    public abstract function fetchInto($className);
 
 }
