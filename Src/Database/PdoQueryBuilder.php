@@ -1,10 +1,12 @@
 <?php
 
+declare(strict_types = 1);
 
 namespace App\Database;
 
+use PDO;
 
-class PdoQueryBuilder extends QueryBuilder
+class PDOQueryBuilder extends QueryBuilder
 {
 
     public function get()
@@ -37,6 +39,16 @@ class PdoQueryBuilder extends QueryBuilder
 
     public function fetchInto($className)
     {
-        return $this->statement->fetchAll(\PDO::FETCH_CLASS, $className);
+        return $this->statement->fetchAll(PDO::FETCH_CLASS, $className);
+    }
+
+    public function beginTransaction()
+    {
+        $this->connection->beginTransaction();
+    }
+
+    public function affected()
+    {
+       return $this->count();
     }
 }
